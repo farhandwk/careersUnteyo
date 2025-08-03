@@ -50,7 +50,7 @@ function App() {
   return (
     <main className='w-full max-w-screen h-auto bg-black font-[helvetica] text-white pt-22'>
       <Header/>
-      <section className='w-full h-full flex flex-col items-center justify-center p-8 md:min-h-[70vh] md:justify-start md:pt-36'
+      <section className='w-full h-full flex flex-col items-center justify-center p-8 lg:min-h-[70vh] md:justify-start md:pt-36'
       style={{
         backgroundImage: `url(${background1})`,
         backgroundPosition: "center",
