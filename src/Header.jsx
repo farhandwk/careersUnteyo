@@ -9,15 +9,14 @@ import hamburger from "./assets/ham.png"
 import ucc from "./assets/ucc.png"
 import { useEffect, useState } from "react";
 import "./App.css"
-// 1. Impor komponen baru
 import MobileNav from "./MobileNav";
 
-// Data
+
 const companyItems = [
-  { id: 1, title: "About Us", link: "/newUnteyo/about/" },
-  { id: 2, title: "Our Program", link: "/newUnteyo/program/" },
-  { id: 3, title: "Careers", link: "/newUnteyo/careers/" },
-  { id: 4, title: "Contact Us", link: "/newUnteyo/contact/" },
+  { id: 1, title: "About Us", link: "/about/" },
+  { id: 2, title: "Our Program", link: "/program/" },
+  { id: 3, title: "Careers", link: "/careers/" },
+  { id: 4, title: "Contact Us", link: "/contact/" },
 ];
 
 const eventItems = [
@@ -28,14 +27,14 @@ const eventItems = [
 ];
 
 const postItems = [
-  { id: 1, title: "Creative Media", link: "/newUnteyo/creativeMedia/" },
-  { id: 2, title: "Student News", link: "/newUnteyo/StudentNews/" },
+  { id: 1, title: "Creative Media", link: "/creativeMedia/" },
+  { id: 2, title: "Student News", link: "/StudentNews/" },
 ];
 
 const socialMedia = [
-  {id: 1, img: instagram},
-  {id: 2, img: tiktok},
-  {id: 3, img: youtube},
+  {id: 1, img: instagram, link: "https://www.instagram.com/unteyojourney?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="},
+  {id: 2, img: tiktok, link: "https://www.tiktok.com/@unteyo.journey?_t=ZS-8w65xIKnw9v&_r=1"},
+  {id: 3, img: youtube, link: "https://www.youtube.com/@UnteyoJourney"},
 ]
 
 const comingSoonContent = (
@@ -69,13 +68,12 @@ export default function Header() {
           isScrolled || isSidebarOpen ? "scrolled" : ""
         }`} 
       >
-        {/* 6. Tombol Menu Mobile: Gunakan 'lg:hidden' agar hanya tampil di layar kecil */}
         <div className="flex flex-row gap-6 items-center justify-center">
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="lg:hidden">
             <img src={hamburger} ></img>
           </button>
           <div className="flex flex-row items-center justify-center">
-            <a href="/newUnteyo/">
+            <a href="/">
               <img src={logo} className="w-[74px] h-[80px] " alt="Logo"/>
             </a>
           
@@ -88,14 +86,14 @@ export default function Header() {
         </div>
         <div className="flex flex-row gap-4">
           {socialMedia.map((item) => (
-            <img src={item.img} key={item.id} className="w-6 md:w-8"></img>
+            <a key={item.id} href={item.link} target="blank">
+              <img src={item.img}  className="w-6 md:w-8"></img>
+            </a>
           ))}
         </div>
 
         
       </nav>
-      
-      {/* 7. Render komponen sidebar di sini */}
       <MobileNav isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
     </>
   );
