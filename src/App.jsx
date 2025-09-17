@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import background1 from './assets/background1.png'
 import Header from "./Header"
 import Footer from "./Footer"
@@ -15,9 +16,9 @@ import { motion } from 'framer-motion';
 
 const AnimatedSection = ({ children }) => (
   <motion.section
-    initial={{ opacity: 0, y: 50 }} // Keadaan awal: transparan dan sedikit di bawah
-    whileInView={{ opacity: 1, y: 0 }} // Animasi saat terlihat: muncul dan naik ke posisi
-    viewport={{ once: true, amount: 0.3 }} // Animasi hanya berjalan sekali, saat 30% elemen terlihat
+    initial={{ opacity: 0, y: 50 }} 
+    whileInView={{ opacity: 1, y: 0 }} 
+    viewport={{ once: true, amount: 0.3 }} 
     transition={{ duration: 0.8, ease: "easeOut" }}
     className='w-full h-full pt-12 flex flex-col items-center justify-center p-8'
   >
@@ -26,27 +27,95 @@ const AnimatedSection = ({ children }) => (
 );
 
 const positionAvailable = [
-  {id: 1, title: "Social Media Specialist", count: "0"},
-  {id: 1, title: "Graphic Design", count: "0"},
-  {id: 1, title: "Human Experience Management", count: "0"},
-  {id: 1, title: "Project Officer", count: "0"},
-  {id: 1, title: "Web Developer", count: "0"},
-  {id: 1, title: "Content Production", count: "0"},
-  {id: 1, title: "Content Ideator", count: "0"},
-  {id: 1, title: "Video Editor", count: "0"}
-]
+  {
+    id: 1,
+    title: "Social Media Specialist",
+    count: "0",
+    jobdesk: [
+      "Mengelola dan mengembangkan strategi konten untuk platform media sosial (Instagram, TikTok).",
+      "Membuat jadwal posting dan berinteraksi dengan audiens.",
+      "Menganalisis performa kampanye dan metrik media sosial."
+    ],
+    specificRequirements: [
+      "Pengalaman mengelola akun media sosial brand atau komunitas.",
+      "Memahami tren terbaru di Instagram dan TikTok.",
+      "Kemampuan copywriting yang baik."
+    ]
+  },
+  {
+    id: 2,
+    title: "Web Developer",
+    count: "0",
+    jobdesk: [
+      "Mengembangkan dan memelihara fitur-fitur pada website utama.",
+      "Berkolaborasi dengan tim UI/UX untuk implementasi desain.",
+      "Memastikan performa dan keamanan website."
+    ],
+    specificRequirements: [
+      "Menguasai React.js atau Vue.js.",
+      "Memahami konsep API dan integrasi backend.",
+      "Familiar dengan Git dan workflow pengembangan modern."
+    ]
+  },
+  {id: 3, title: "Graphic Design", count: "0"},
+  {id: 4, title: "Human Experience Management", count: "0"},
+  {id: 5, title: "Project Officer", count: "0"},
+  {id: 6, title: "Content Production", count: "0"},
+  {id: 7, title: "Content Ideator", count: "0"},
+  {id: 8, title: "Video Editor", count: "0"}
+];
 
 const requirements = [
-  {id: 1, title: "Active Student", img: Student, text: "Engages actively in learning and community initiatives."},
-  {id: 2, title: "Proactive & Growth-Oriented", img: Proactive, text: "Demonstrates a strong drive for continuous self-improvement and embraces new challenges"},
-  {id: 3, title: "Creative & Innovative Mindset", img: Creative, text: "Thinks outside the box and brings fresh, inventive ideas to problem-solving."},
-  {id: 4, title: "Agile & Adaptable", img: Agile, text: "Thrives in dynamic environments and adjusts quickly to evolving priorities."},
-  {id: 4, title: "Ready to Contribute", img: Contribute, text: "Eager to take initiative and make a meaningful impact from day one"},
-  {id: 5, title: "Yogyakarta-Based", img: based, text: "Currently resides in or willing to relocate to Yogyakarta to join our team."}
-]
+    {id: 1, title: "Active Student", img: Student, text: "Engages actively in learning and community initiatives."},
+    {id: 2, title: "Proactive & Growth-Oriented", img: Proactive, text: "Demonstrates a strong drive for continuous self-improvement and embraces new challenges"},
+    {id: 3, title: "Creative & Innovative Mindset", img: Creative, text: "Thinks outside the box and brings fresh, inventive ideas to problem-solving."},
+    {id: 4, title: "Agile & Adaptable", img: Agile, text: "Thrives in dynamic environments and adjusts quickly to evolving priorities."},
+    {id: 5, title: "Ready to Contribute", img: Contribute, text: "Eager to take initiative and make a meaningful impact from day one"},
+    {id: 6, title: "Yogyakarta-Based", img: based, text: "Currently resides in or willing to relocate to Yogyakarta to join our team."}
+];
+
+const JobDetailModal = ({ position, onClose }) => {
+  if (!position) return null;
+
+  return (
+    <div 
+      className="fixed inset-0 bg-black/50 z-[100] flex justify-center items-center p-4 font-[Helvetica]"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-black text-white rounded-2xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
+        onClick={e => e.stopPropagation()} 
+      >
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold">{position.title}</h2>
+          <button onClick={onClose} className="text-2xl">&times;</button>
+        </div>
+        
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-lg font-semibold mb-2 border-b border-gray-600 pb-1">Job Description</h3>
+            <ul className="list-disc list-inside space-y-1 text-gray-300">
+              {position.jobdesk?.map((item, index) => <li key={index}>{item}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-lg font-semibold mb-2 border-b border-gray-600 pb-1">Specific Requirements</h3>
+            <ul className="list-disc list-inside space-y-1 text-gray-300">
+              {position.specificRequirements?.map((item, index) => <li key={index}>{item}</li>)}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 
 function App() {
 
+  const [selectedPosition, setSelectedPosition] = useState(null)
+ 
   return (
     <main className='w-full max-w-screen h-auto bg-black font-[helvetica] text-white pt-22'>
       <Header/>
@@ -85,7 +154,7 @@ function App() {
         <h3 className='font-bold text-2xl pb-8 md:text-4xl md:pt-12'>Find Your Postion Now</h3>
         <div className='flex flex-row flex-wrap w-full gap-4 items-start justify-center pb-8'>
           {positionAvailable.map((item) => (
-            <div key={item.id} className='bg-white/10 p-4 border-white/20 border-1 rounded-[10px] hover:border-white transition-[0.5s] flex flex-col gap-1 w-auto md:w-2/10'>
+            <div onClick={() => setSelectedPosition(item)}  key={item.id} className='bg-white/10 p-4 border-white/20 border-1 rounded-[10px] hover:border-white transition-[0.5s] flex flex-col gap-1 w-auto md:w-2/10'>
               <h4 className='font-semibold'>{item.title}</h4>
               <div className='flex flex-row gap-2'>
                 <span >{item.count}</span>
@@ -97,6 +166,12 @@ function App() {
         <a className='bg-white/10 border-white/20 border-1 rounded-full p-2 w-48 flex flex-col items-center justify-centers hover:border-white'>Apply Now</a>
       </AnimatedSection>
       <Footer/>
+      {selectedPosition && (
+        <JobDetailModal 
+          position={selectedPosition} 
+          onClose={() => setSelectedPosition(null)} 
+        />
+      )}
     </main>
   )
 }
